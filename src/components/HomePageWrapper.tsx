@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import HomePage from '@/pages/HomePage'
 import LandingPage from '@/pages/LandingPage'
@@ -5,6 +6,21 @@ import FirstLoginModal from '@/components/FirstLoginModal'
 
 export default function HomePageWrapper() {
   const { isAuthenticated, isLoading, isFirstLogin, clearFirstLogin } = useAuth()
+  const [shouldShowOnboardingModal, setShouldShowOnboardingModal] = useState(false)
+
+  useEffect(() => {
+    if (isAuthenticated && isFirstLogin) {
+      const timer = setTimeout(() => {
+        setShouldShowOnboardingModal(true)
+      }, 3000)
+
+      return () => {
+        clearTimeout(timer)
+      }
+    } else {
+      setShouldShowOnboardingModal(false)
+    }
+  }, [isAuthenticated, isFirstLogin])
 
   if (isLoading) {
     return (
@@ -17,7 +33,7 @@ export default function HomePageWrapper() {
   return (
     <>
       {isAuthenticated ? <HomePage /> : <LandingPage />}
-      <FirstLoginModal open={isAuthenticated && isFirstLogin} onClose={clearFirstLogin} />
+      <FirstLoginModal open={shouldShowOnboardingModal} onClose={clearFirstLogin} />
     </>
   )
 }
