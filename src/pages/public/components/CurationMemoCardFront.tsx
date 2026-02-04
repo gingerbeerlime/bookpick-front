@@ -27,9 +27,9 @@ interface CurationMemoCardFrontProps {
 
 const CurationMemoCardFront = ({ review, nickName, fontClass = 'font-handwriting', theme = DEFAULT_CARD_THEME }: CurationMemoCardFrontProps) => {
   return (
-    <Card className={`memo-card-peel ${theme.peel} absolute inset-0 backface-hidden ${theme.cardBorder} ${theme.cardBg} shadow-md ${theme.pattern}`}>
+    <Card className={`memo-card-peel ${theme.peel} backface-hidden ${theme.cardBorder} ${theme.cardBg} shadow-md ${theme.pattern} min-h-[320px]`}>
       <CardContent className='flex flex-1 items-center px-5 pt-6'>
-        <p className={`line-clamp-[10] ${fontClass} text-xl leading-relaxed ${theme.textColor} whitespace-pre-wrap`}>
+        <p className={`${fontClass} text-xl leading-relaxed ${theme.textColor} whitespace-pre-wrap`}>
           "{review}"
         </p>
       </CardContent>

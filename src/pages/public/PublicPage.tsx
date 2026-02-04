@@ -11,7 +11,7 @@ const PublicPage = () => {
           카드를 눌러 어떤 책인지 확인해보세요
         </p>
       </div>
-      <div className='grid grid-cols-1 gap-4 xs:grid-cols-2'>
+      <div className='columns-1 xs:columns-2 gap-4'>
         {mockPublicCurations.map((item) => (
           <CurationMemoCard key={item.id} item={item} />
         ))}

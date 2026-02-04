@@ -15,7 +15,7 @@ const CurationMemoCardBack = ({ book }: CurationMemoCardBackProps) => {
 
   return (
     <Card className='absolute inset-0 rotate-y-180 backface-hidden border-[#3a2f24] bg-[#3a2f24] shadow-md'>
-      <CardContent className='flex h-full flex-col items-center justify-center gap-4 px-5'>
+      <CardContent className='flex flex-1 flex-col items-center justify-center gap-4 px-5'>
         {book.imageUrl && (
           <div className='h-40 w-28 overflow-hidden rounded-sm shadow-md'>
             <img

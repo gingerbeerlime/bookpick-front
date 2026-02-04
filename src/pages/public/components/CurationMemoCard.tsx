@@ -95,10 +95,10 @@ const CurationMemoCard = ({ item, onBeforeFlip }: CurationMemoCardProps) => {
 
   return (
     <div
-      className='perspective-1000 relative aspect-[3/4] cursor-pointer'
+      className='perspective-1000 relative break-inside-avoid mb-4 cursor-pointer'
       onClick={handleClick}
     >
-      <div className={`preserve-3d flip-transition relative h-full w-full ${isFlipped ? 'flipped' : ''}`}>
+      <div className={`preserve-3d flip-transition relative ${isFlipped ? 'flipped' : ''}`}>
         <CurationMemoCardFront
           review={item.review}
           nickName={item.nickName}
