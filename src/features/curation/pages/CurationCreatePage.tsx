@@ -177,7 +177,8 @@ export default function CurationCreatePage() {
     if (!isEmptyContent) {
       const confirmed = await confirm({
         title: '작성 취소',
-        description: '작성 중인 내용이 있습니다.\n정말 나가시겠습니까?\n저장하지 않은 내용은 사라집니다.',
+        description:
+          '작성 중인 내용이 있습니다.\n정말 나가시겠습니까?\n저장하지 않은 내용은 사라집니다.',
         confirmText: '나가기',
         cancelText: '계속 작성',
         variant: 'destructive',

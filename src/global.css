@@ -107,6 +107,13 @@ body {
     'Wanted Sans Variable', 'Wanted Sans', -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI',
     'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', sans-serif;
+  --font-handwriting: 'Nanum Pen Script', cursive;
+  --font-is-yun: 'IsYun', cursive;
+  --font-omu-daye: 'OmuDaye', cursive;
+  --font-ongleip-eoyeonce: 'OngleipEoyeonce', cursive;
+  --font-gangwon-education-saeum: 'GangwonEducationSaeum', cursive;
+  --font-mapo-flower-island: 'MapoFlowerIsland', cursive;
+  --font-kbiz-hanmaum-myungjo: 'KbizHanmaumMyungjo', cursive;
   /* --breakpoint-3xl: 1920px;
   --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
@@ -259,5 +266,126 @@ body {
     100% {
       transform: scale(1);
     }
+  }
+
+  /* 종이 모서리 들림 효과 (page corner peel) */
+  .memo-card-peel {
+    overflow: hidden;
+  }
+  .memo-card-peel::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    background: linear-gradient(
+      135deg,
+      #faf5eb 0%,
+      #faf5eb 44%,
+      #e8dcc8 50%,
+      #f0e6d0 56%,
+      #e4d5bc 100%
+    );
+    box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.04);
+    transition: width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease;
+  }
+  .memo-card-peel:hover::after {
+    width: 30px;
+    height: 30px;
+    box-shadow: -2px -2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  /* 카드 테마 - 다이어리 줄 무늬 */
+  .memo-pattern-diary {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 31px,
+      #d4cfc8 31px,
+      #d4cfc8 32px
+    );
+  }
+
+  /* 카드 테마 - 모눈 격자 */
+  .memo-pattern-grid {
+    background-image:
+      linear-gradient(to bottom, #e8e8e8 1px, transparent 1px),
+      linear-gradient(to right, #e8e8e8 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* 카드 테마 - 종이 질감 */
+  .memo-pattern-paper {
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(139, 115, 85, 0.03) 3px,
+        rgba(139, 115, 85, 0.03) 4px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 5px,
+        rgba(139, 115, 85, 0.025) 5px,
+        rgba(139, 115, 85, 0.025) 6px
+      );
+  }
+
+  /* 테마별 페이지 들림 효과 */
+  .memo-peel-diary.memo-card-peel::after {
+    background: linear-gradient(
+      135deg,
+      #f7f5f2 0%,
+      #f7f5f2 44%,
+      #e0ddd8 50%,
+      #ece9e4 56%,
+      #ddd9d3 100%
+    );
+  }
+
+  .memo-peel-grid.memo-card-peel::after {
+    background: linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #ffffff 44%,
+      #d4d4d4 50%,
+      #eeeeee 56%,
+      #d0d0d0 100%
+    );
+  }
+
+  .memo-peel-paper.memo-card-peel::after {
+    background: linear-gradient(
+      135deg,
+      #f2ede5 0%,
+      #f2ede5 44%,
+      #d4c9b8 50%,
+      #e8dfd0 56%,
+      #d0c4b2 100%
+    );
+  }
+
+  /* 3D 플립 유틸리티 */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .rotate-y-180 {
+    transform: rotateY(-180deg);
+  }
+  .flip-transition {
+    transition: transform 0.6s ease-in-out;
+  }
+  .flipped {
+    transform: rotateY(-180deg);
   }
 }

@@ -46,6 +46,10 @@ import ServerError from '@/shared/pages/ServerError'
 import ProtectedServiceRoute from '@/app/router/guards/ProtectedServiceRoute'
 import AuthRedirectRoute from '@/app/router/guards/AuthRedirectRoute'
 
+// 테스트페이지
+import PublicPage from '@/pages/public/PublicPage'
+import PublicPageAuth from '@/pages/public/PublicPageAuth'
+
 export const routerConfig: RouteObject[] = [
   {
     path: '/',
@@ -139,6 +143,14 @@ export const routerConfig: RouteObject[] = [
   {
     path: '*',
     element: <NotFound />,
+  },
+  {
+    path: '/public-test',
+    element: <PublicPage />,
+  },
+  {
+    path: '/public-test-authorized',
+    element: <PublicPageAuth />,
   },
   ...(import.meta.env.DEV ? [{ path: '/ui-preview', element: <UIPreview /> }] : []),
 ]
