@@ -1,8 +1,6 @@
 import { Pencil } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
-import { Button } from '@/shared/ui'
-
 import CurationMemoCard from './components/CurationMemoCard'
 import PublicLayout from './components/PublicLayout'
 import { mockPublicCurations } from './data/mockPublicCurations'
