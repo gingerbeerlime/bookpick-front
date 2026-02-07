@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { type ReactNode, useState } from 'react'
 
 import type { PublicCurationItem } from '../types/public.types'
 import CurationMemoCardBack from './CurationMemoCardBack'
@@ -57,9 +57,10 @@ const CARD_THEMES: CardTheme[] = [
 interface CurationMemoCardProps {
   item: PublicCurationItem
   onBeforeFlip?: (id: number) => Promise<boolean>
+  renderOverlay?: (props: { onCancel: () => void }) => ReactNode
 }
 
-const CurationMemoCard = ({ item, onBeforeFlip }: CurationMemoCardProps) => {
+const CurationMemoCard = ({ item, onBeforeFlip, renderOverlay }: CurationMemoCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false)
   const [showOverlay, setShowOverlay] = useState(false)
 
@@ -69,7 +70,7 @@ const CurationMemoCard = ({ item, onBeforeFlip }: CurationMemoCardProps) => {
       return
     }
 
-    if (onBeforeFlip) {
+    if (onBeforeFlip || renderOverlay) {
       setShowOverlay(true)
       return
     }
@@ -107,9 +108,12 @@ const CurationMemoCard = ({ item, onBeforeFlip }: CurationMemoCardProps) => {
         />
         <CurationMemoCardBack book={item.book} />
       </div>
-      {showOverlay && (
-        <CurationMemoCardOverlay onConfirm={handleConfirm} onCancel={handleCancel} />
-      )}
+      {showOverlay &&
+        (renderOverlay ? (
+          renderOverlay({ onCancel: handleCancel })
+        ) : (
+          <CurationMemoCardOverlay onConfirm={handleConfirm} onCancel={handleCancel} />
+        ))}
     </div>
   )
 }

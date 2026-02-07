@@ -26,11 +26,24 @@ const PublicPageAuth = () => {
             className='cursor-pointer text-[#5c4a32]'
             onClick={() => navigate('/curation/create')}
           />
-          <span className='font-handwriting text-lg text-[#5c4a32]'>{MOCK_USER.nickName}</span>
-          <span className='font-handwriting text-lg text-[#8b7355]'>{MOCK_USER.points}P</span>
+          <span className='font-pretendard text-base font-medium text-[#5c4a32]'>{MOCK_USER.nickName}</span>
+          <span className='font-pretendard text-base font-medium text-[#8b7355]'>{MOCK_USER.points}P</span>
         </div>
       </div>
-      <p className='mb-6 text-center font-handwriting text-xl text-[#8b7355]'>
+      <p className='mb-1 text-center font-pretendard text-base font-medium text-[#5c4a32]'>
+        당신의 독서 성향은
+      </p>
+      <div className='mb-3 flex flex-wrap justify-center gap-2'>
+        {['#성장', '#고전', '#추리', '#과학'].map((tag) => (
+          <span
+            key={tag}
+            className='rounded-full bg-[#5c4a32]/10 px-3 py-1 font-pretendard text-sm font-medium text-[#5c4a32]'
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+      <p className='mb-6 text-center font-pretendard text-base text-[#8b7355]'>
         카드를 눌러 어떤 책인지 확인해보세요
       </p>
       <div className='columns-1 xs:columns-2 gap-4'>
