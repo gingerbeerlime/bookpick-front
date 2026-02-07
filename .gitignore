@@ -26,6 +26,9 @@ docs/
 !.vscode/extensions.json
 .idea
 .DS_Store
+
+# Claude Code
+.claude/
 *.suo
 *.ntvs*
 *.njsproj
