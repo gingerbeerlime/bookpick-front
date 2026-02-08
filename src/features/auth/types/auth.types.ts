@@ -42,6 +42,16 @@ export interface AuthResponse {
   token: Token
 }
 
+// Kakao OAuth Types
+export interface KakaoLoginUrlResponse {
+  url: string
+}
+
+export interface KakaoTokenRequest {
+  code: string
+}
+
 // Response Type
 export type RegisterResponse = ApiResponse<RegisterResult>
 export type LoginResponse = ApiResponse<LoginResult>
+export type KakaoLoginUrlApiResponse = ApiResponse<KakaoLoginUrlResponse>

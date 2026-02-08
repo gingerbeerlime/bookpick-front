@@ -10,6 +10,7 @@ import HomePageWrapper from '@/components/HomePageWrapper'
 // 인증
 import LoginPage from '@/features/auth/pages/LoginPage'
 import RegisterPage from '@/features/auth/pages/RegisterPage'
+import KakaoCallbackPage from '@/features/auth/pages/KakaoCallbackPage'
 
 // 큐레이션
 import CurationCreatePage from '@/features/curation/pages/CurationCreatePage'
@@ -133,6 +134,10 @@ export const routerConfig: RouteObject[] = [
       {
         path: 'register',
         element: <RegisterPage />,
+      },
+      {
+        path: 'auth/kakao/callback',
+        element: <KakaoCallbackPage />,
       },
     ],
   },

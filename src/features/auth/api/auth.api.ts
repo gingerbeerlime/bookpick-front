@@ -3,6 +3,8 @@ import type {
   LoginResponse,
   RegisterRequest,
   RegisterResponse,
+  KakaoLoginUrlApiResponse,
+  KakaoTokenRequest,
 } from '../types/auth.types'
 import type { AxiosErrorResponse } from '@/shared/api/api.types'
 import { createAxiosClient } from '@/shared/api/axiosClient'
@@ -39,5 +41,32 @@ export const authApi = {
   logout: async (): Promise<void> => {
     // const response = await axios.post(`${urlPrefix}/logout`)
     // return response.data
+  },
+
+  /**
+   * 카카오 로그인 URL 요청
+   */
+  getKakaoLoginUrl: async (): Promise<KakaoLoginUrlApiResponse> => {
+    const response = await axios.get(`${urlPrefix}/kakao/login`)
+    return response.data
+  },
+
+  /**
+   * 카카오 인증 코드로 토큰 교환
+   */
+  loginWithKakao: async (request: KakaoTokenRequest): Promise<LoginResponse> => {
+    try {
+      const response = await axios.post(`${urlPrefix}/kakao/token`, request)
+      return response.data
+    } catch (error: unknown) {
+      const axiosError = error as AxiosErrorResponse
+      if (axiosError.response?.status === 401) {
+        throw new Error('카카오 인증에 실패했습니다. 다시 시도해주세요.')
+      }
+      if (axiosError.response?.status === 403) {
+        throw new Error('미등록 사용자입니다.')
+      }
+      throw error
+    }
   },
 }

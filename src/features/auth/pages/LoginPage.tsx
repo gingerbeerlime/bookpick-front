@@ -4,17 +4,31 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, type LoginFormData } from '../model/validationSchema'
 import { useAuth } from '../hooks/useAuth'
+import { useState } from 'react'
+
+const KakaoIcon = () => (
+  <svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <path
+      fillRule='evenodd'
+      clipRule='evenodd'
+      d='M9 0.5C4.02944 0.5 0 3.69052 0 7.63636C0 10.1174 1.55866 12.3049 3.93099 13.5986L2.93329 17.0669C2.84299 17.3956 3.21989 17.6557 3.50409 17.4642L7.62918 14.6899C8.08011 14.7397 8.53711 14.7727 9 14.7727C13.9706 14.7727 18 11.5822 18 7.63636C18 3.69052 13.9706 0.5 9 0.5Z'
+      fill='#000000'
+    />
+  </svg>
+)
 
 export default function LoginPage() {
   const navigate = useNavigate()
+  const [isKakaoLoading, setIsKakaoLoading] = useState(false)
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormData>({ resolver: zodResolver(loginSchema), mode: 'onTouched' })
 
-  const { useLogin } = useAuth()
+  const { useLogin, useGetKakaoLoginUrl } = useAuth()
   const { mutateAsync: loginMutateAsync, isPending } = useLogin()
+  const { refetch: fetchKakaoLoginUrl } = useGetKakaoLoginUrl(false)
 
   const onSubmit = async (data: LoginFormData) => {
     try {
@@ -29,6 +43,19 @@ export default function LoginPage() {
       }, 100)
     } catch (error) {
       console.error(error)
+    }
+  }
+
+  const handleKakaoLogin = async () => {
+    try {
+      setIsKakaoLoading(true)
+      const { data } = await fetchKakaoLoginUrl()
+      if (data?.url) {
+        window.location.href = data.url
+      }
+    } catch (error) {
+      console.error('카카오 로그인 URL 요청 실패:', error)
+      setIsKakaoLoading(false)
     }
   }
 
@@ -71,6 +98,26 @@ export default function LoginPage() {
               {isPending ? '로그인 중...' : '로그인'}
             </Button>
           </form>
+
+          <div className='relative my-6'>
+            <div className='absolute inset-0 flex items-center'>
+              <span className='w-full border-t' />
+            </div>
+            <div className='relative flex justify-center text-xs uppercase'>
+              <span className='bg-card px-2 text-muted-foreground'>또는</span>
+            </div>
+          </div>
+
+          <Button
+            type='button'
+            variant='outline'
+            className='w-full bg-[#FEE500] hover:bg-[#FDD835] text-black border-0'
+            onClick={handleKakaoLogin}
+            disabled={isKakaoLoading}
+          >
+            <KakaoIcon />
+            <span className='ml-2'>{isKakaoLoading ? '로딩 중...' : '카카오로 시작하기'}</span>
+          </Button>
         </CardContent>
 
         <CardFooter>
