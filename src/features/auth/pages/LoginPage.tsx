@@ -50,8 +50,8 @@ export default function LoginPage() {
     try {
       setIsKakaoLoading(true)
       const { data } = await fetchKakaoLoginUrl()
-      if (data?.url) {
-        window.location.href = data.url
+      if (data?.authUrl) {
+        window.location.href = data.authUrl
       }
     } catch (error) {
       console.error('카카오 로그인 URL 요청 실패:', error)

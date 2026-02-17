@@ -44,7 +44,7 @@ export interface AuthResponse {
 
 // Kakao OAuth Types
 export interface KakaoLoginUrlResponse {
-  url: string
+  authUrl: string
 }
 
 export interface KakaoTokenRequest {

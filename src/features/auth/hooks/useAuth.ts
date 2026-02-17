@@ -1,9 +1,8 @@
 import { useAuth as useAuthContext } from '@/app/providers'
 import { authApi } from '../api/auth.api'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
-import type { RegisterRequest, LoginRequest, KakaoTokenRequest } from '../types/auth.types'
-import { useQuery } from '@tanstack/react-query'
+import type { RegisterRequest, LoginRequest } from '../types/auth.types'
 
 export const useAuth = () => {
   const { user, token, isAuthenticated, isLoading, isFirstLogin, setAuthState, clearFirstLogin } =
@@ -113,13 +112,13 @@ export const useAuth = () => {
   }
 
   /**
-   * 카카오 로그인 (토큰 교환)
+   * 카카오 로그인 (code → 토큰 교환)
    */
   const useKakaoLogin = () => {
     return useMutation({
-      mutationFn: async (request: KakaoTokenRequest) => {
+      mutationFn: async (code: string) => {
         setAuthState((prev) => ({ ...prev, isLoading: true }))
-        const response = await authApi.loginWithKakao(request)
+        const response = await authApi.exchangeKakaoToken({ code })
         return response.data
       },
       onSuccess: (data) => {

@@ -3,52 +3,63 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import toast from 'react-hot-toast'
 
+const ERROR_MESSAGES: Record<string, string> = {
+  access_denied: '카카오 로그인이 취소되었습니다.',
+  auth_failed: '카카오 인증에 실패했습니다. 다시 시도해주세요.',
+  user_not_found: '등록되지 않은 사용자입니다.',
+}
+
 export default function KakaoCallbackPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const { useKakaoLogin } = useAuth()
-  const { mutateAsync: kakaoLoginMutateAsync } = useKakaoLogin()
+  const { useKakaoLogin, isFirstLogin } = useAuth()
+  const { mutate: kakaoLoginMutate, isSuccess, isError } = useKakaoLogin()
   const hasProcessed = useRef(false)
 
   useEffect(() => {
     if (hasProcessed.current) return
     hasProcessed.current = true
 
-    const code = searchParams.get('code')
     const error = searchParams.get('error')
 
-    // 사용자가 동의 취소한 경우
+    // 에러가 있는 경우
     if (error) {
-      toast.error('카카오 로그인이 취소되었습니다.')
+      const errorMessage = ERROR_MESSAGES[error] || '카카오 로그인에 실패했습니다.'
+      toast.error(errorMessage)
       navigate('/login', { replace: true })
       return
     }
 
-    // 인증 코드가 없는 경우
+    // code 파라미터 확인
+    const code = searchParams.get('code')
+
     if (!code) {
       toast.error('인증 코드가 없습니다.')
       navigate('/login', { replace: true })
       return
     }
 
-    // 인증 코드로 토큰 교환
-    const processKakaoLogin = async () => {
-      try {
-        const response = await kakaoLoginMutateAsync({ code })
-        setTimeout(() => {
-          if (response?.isFirstLogin) {
-            navigate('/onboarding', { replace: true })
-          } else {
-            navigate('/', { replace: true })
-          }
-        }, 100)
-      } catch {
-        navigate('/login', { replace: true })
+    // 토큰 교환 요청
+    kakaoLoginMutate(code)
+  }, [searchParams, navigate, kakaoLoginMutate])
+
+  // 로그인 성공 시 페이지 이동
+  useEffect(() => {
+    if (isSuccess) {
+      if (isFirstLogin) {
+        navigate('/onboarding', { replace: true })
+      } else {
+        navigate('/', { replace: true })
       }
     }
+  }, [isSuccess, isFirstLogin, navigate])
 
-    processKakaoLogin()
-  }, [searchParams, kakaoLoginMutateAsync, navigate])
+  // 로그인 실패 시 로그인 페이지로 이동
+  useEffect(() => {
+    if (isError) {
+      navigate('/login', { replace: true })
+    }
+  }, [isError, navigate])
 
   return (
     <div className='max-w-md w-full space-y-8 text-center'>
