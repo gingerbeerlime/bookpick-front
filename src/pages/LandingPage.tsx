@@ -8,7 +8,7 @@ export default function LandingPage() {
   const previewCurations = mockCurationData.slice(0, 3)
 
   const handleStartClick = () => {
-    navigate('/register')
+    navigate('/login')
   }
 
   const handleCardClick = () => {

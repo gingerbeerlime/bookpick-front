@@ -111,12 +111,12 @@ export default function LoginPage() {
           <Button
             type='button'
             variant='outline'
-            className='w-full bg-[#FEE500] hover:bg-[#FDD835] text-black border-0'
+            className='w-full h-[45px] bg-[#FEE500] hover:bg-[#FDD835] text-black/85 border-0 rounded-[12px]'
             onClick={handleKakaoLogin}
             disabled={isKakaoLoading}
           >
             <KakaoIcon />
-            <span className='ml-2'>{isKakaoLoading ? '로딩 중...' : '카카오로 시작하기'}</span>
+            <span className='ml-2'>{isKakaoLoading ? '로딩 중...' : '카카오계정 로그인'}</span>
           </Button>
         </CardContent>
 
@@ -133,7 +133,7 @@ export default function LoginPage() {
               to='/register'
               className='text-sm text-gray-600 hover:text-gray-900 underline block'
             >
-              회원가입하기
+              다른 이메일로 가입하기
             </Link>
           </div>
         </CardFooter>
