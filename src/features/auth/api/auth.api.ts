@@ -3,6 +3,8 @@ import type {
   LoginResponse,
   RegisterRequest,
   RegisterResponse,
+  KakaoLoginUrlApiResponse,
+  KakaoTokenRequest,
 } from '../types/auth.types'
 import type { AxiosErrorResponse } from '@/shared/api/api.types'
 import { createAxiosClient } from '@/shared/api/axiosClient'
@@ -39,5 +41,21 @@ export const authApi = {
   logout: async (): Promise<void> => {
     // const response = await axios.post(`${urlPrefix}/logout`)
     // return response.data
+  },
+
+  /**
+   * 카카오 로그인 URL 요청
+   */
+  getKakaoLoginUrl: async (): Promise<KakaoLoginUrlApiResponse> => {
+    const response = await axios.get('/api/v1/oauth/kakao')
+    return response.data
+  },
+
+  /**
+   * 카카오 인증 코드로 토큰 교환
+   */
+  exchangeKakaoToken: async (request: KakaoTokenRequest): Promise<LoginResponse> => {
+    const response = await axios.post('/api/v1/oauth/token', request)
+    return response.data
   },
 }

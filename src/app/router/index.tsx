@@ -10,6 +10,7 @@ import HomePageWrapper from '@/components/HomePageWrapper'
 // 인증
 import LoginPage from '@/features/auth/pages/LoginPage'
 import RegisterPage from '@/features/auth/pages/RegisterPage'
+import KakaoCallbackPage from '@/features/auth/pages/KakaoCallbackPage'
 
 // 큐레이션
 import CurationCreatePage from '@/features/curation/pages/CurationCreatePage'
@@ -45,6 +46,10 @@ import ServerError from '@/shared/pages/ServerError'
 // 라우트 가드
 import ProtectedServiceRoute from '@/app/router/guards/ProtectedServiceRoute'
 import AuthRedirectRoute from '@/app/router/guards/AuthRedirectRoute'
+
+// 테스트페이지
+// import PublicPage from '@/pages/public/PublicPage'
+// import PublicPageAuth from '@/pages/public/PublicPageAuth'
 
 export const routerConfig: RouteObject[] = [
   {
@@ -130,6 +135,10 @@ export const routerConfig: RouteObject[] = [
         path: 'register',
         element: <RegisterPage />,
       },
+      {
+        path: 'auth/kakao/callback',
+        element: <KakaoCallbackPage />,
+      },
     ],
   },
   {
@@ -140,6 +149,14 @@ export const routerConfig: RouteObject[] = [
     path: '*',
     element: <NotFound />,
   },
+  // {
+  //   path: '/public-test',
+  //   element: <PublicPage />,
+  // },
+  // {
+  //   path: '/public-test-authorized',
+  //   element: <PublicPageAuth />,
+  // },
   ...(import.meta.env.DEV ? [{ path: '/ui-preview', element: <UIPreview /> }] : []),
 ]
 
