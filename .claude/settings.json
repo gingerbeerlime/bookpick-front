@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "deny": [
+      "Skill(git-commit-workflow)"
+    ]
+  }
+}
